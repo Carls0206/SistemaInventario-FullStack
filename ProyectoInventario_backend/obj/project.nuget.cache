@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "hqQskJwTZT8=",
+  "dgSpecHash": "+bowfpKNPgQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario\\ProyectoInventario.csproj",
+  "projectFilePath": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\ProyectoInventario.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Carlos\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\Carlos\\.nuget\\packages\\dapper\\2.1.100\\dapper.2.1.100.nupkg.sha512",
     "C:\\Users\\Carlos\\.nuget\\packages\\jwt\\10.1.1\\jwt.10.1.1.nupkg.sha512",
     "C:\\Users\\Carlos\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.15\\microsoft.aspnetcore.openapi.10.0.15.nupkg.sha512",

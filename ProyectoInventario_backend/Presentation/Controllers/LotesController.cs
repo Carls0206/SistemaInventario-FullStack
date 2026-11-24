@@ -37,7 +37,7 @@ namespace ProyectoInventario.Presentation.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return Conflict(new { mensaje = ex.Message });
+                return Conflict(new ErrorResponseDto(ex.Message, null, HttpContext.TraceIdentifier));
             }
         }
 
@@ -51,7 +51,7 @@ namespace ProyectoInventario.Presentation.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return Conflict(new { mensaje = ex.Message });
+                return Conflict(new ErrorResponseDto(ex.Message, null, HttpContext.TraceIdentifier));
             }
         }
 

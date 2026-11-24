@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using ProyectoInventario.Application.DTOs;
 using ProyectoInventario.Application.Interfaces;
 using ProyectoInventario.Domain.Entities;
@@ -10,12 +11,14 @@ namespace ProyectoInventario.Application.Services
         private readonly IProductoLotesRepo _productoLotes;
         private readonly IProductosRepo _productos;
         private readonly ILotesRepo _lotes;
+        private readonly ILogger<ProductoLoteService> _logger;
 
-        public ProductoLoteService(IProductoLotesRepo productoLotes, IProductosRepo productos, ILotesRepo lotes)
+        public ProductoLoteService(IProductoLotesRepo productoLotes, IProductosRepo productos, ILotesRepo lotes, ILogger<ProductoLoteService> logger)
         {
             _productoLotes = productoLotes;
             _productos = productos;
             _lotes = lotes;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<ProductoLoteResponseDto>> GetAllAsync()
@@ -40,11 +43,17 @@ namespace ProyectoInventario.Application.Services
         {
             var producto = await _productos.GetByIdAsync(dto.ProductoId);
             if (producto is null)
+            {
+                _logger.LogWarning("Creación de entrada fallida: producto {ProductoId} no existe", dto.ProductoId);
                 throw new KeyNotFoundException($"No existe el producto con Id {dto.ProductoId}.");
+            }
 
             var lote = await _lotes.GetByIdAsync(dto.LoteId);
             if (lote is null)
+            {
+                _logger.LogWarning("Creación de entrada fallida: lote {LoteId} no existe", dto.LoteId);
                 throw new KeyNotFoundException($"No existe el lote con Id {dto.LoteId}.");
+            }
 
             var entity = new ProductoLote
             {
@@ -57,17 +66,25 @@ namespace ProyectoInventario.Application.Services
             };
 
             entity.Id = await _productoLotes.CrearLoteAsync(entity);
+            _logger.LogInformation("Entrada de lote creada: Id {ProductoLoteId} Producto {ProductoId} Lote {LoteId}", entity.Id, entity.ProductoId, entity.LoteId);
             return MapToDto(entity);
         }
 
         public async Task<bool> UpdateAsync(int id, ProductoLoteUpdateDto dto)
         {
             var existente = await _productoLotes.GetByIdAsync(id);
-            if (existente is null) return false;
+            if (existente is null)
+            {
+                _logger.LogWarning("Actualización de entrada fallida: Id {ProductoLoteId} no existe", id);
+                return false;
+            }
 
             var lote = await _lotes.GetByIdAsync(dto.LoteId);
             if (lote is null)
+            {
+                _logger.LogWarning("Actualización de entrada fallida: lote {LoteId} no existe", dto.LoteId);
                 throw new KeyNotFoundException($"No existe el lote con Id {dto.LoteId}.");
+            }
 
             existente.LoteId = dto.LoteId;
             existente.FechaIngreso = dto.FechaIngreso;
@@ -75,12 +92,17 @@ namespace ProyectoInventario.Application.Services
             existente.Cantidad = dto.Cantidad;
             existente.Estado = dto.Estado;
 
-            return await _productoLotes.ActualizarLoteAsync(existente);
+            var ok = await _productoLotes.ActualizarLoteAsync(existente);
+            if (ok) _logger.LogInformation("Entrada de lote actualizada: Id {ProductoLoteId}", id);
+            return ok;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            return await _productoLotes.EliminarLoteAsync(id);
+            var ok = await _productoLotes.EliminarLoteAsync(id);
+            if (ok) _logger.LogInformation("Entrada de lote eliminada lógicamente: Id {ProductoLoteId}", id);
+            else _logger.LogWarning("Eliminación de entrada fallida: Id {ProductoLoteId} no existe", id);
+            return ok;
         }
 
         private static ProductoLoteResponseDto MapToDto(ProductoLote lote)

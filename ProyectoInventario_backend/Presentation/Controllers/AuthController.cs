@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoInventario.Application.DTOs;
 using ProyectoInventario.Application.DTOs.Auth;
 using ProyectoInventario.Application.Interfaces;
 
@@ -17,7 +18,8 @@ namespace ProyectoInventario.Presentation.Controllers
         public async Task<ActionResult<LoginResponseDto>> Login([FromBody] LoginRequestDto request)
         {
             var result = await _auth.LoginAsync(request);
-            if (result is null) return Unauthorized(new { mensaje = "Credenciales inválidas" });
+            if (result is null)
+                return Unauthorized(new ErrorResponseDto("Credenciales inválidas.", null, HttpContext.TraceIdentifier));
             return Ok(result);
         }
 
@@ -27,7 +29,7 @@ namespace ProyectoInventario.Presentation.Controllers
         {
             var creado = await _auth.RegisterAsync(request);
             if (creado is null)
-                return Conflict(new { mensaje = "El correo ya está registrado." });
+                return Conflict(new ErrorResponseDto("El correo ya está registrado.", null, HttpContext.TraceIdentifier));
 
             return Created(string.Empty, creado);
         }

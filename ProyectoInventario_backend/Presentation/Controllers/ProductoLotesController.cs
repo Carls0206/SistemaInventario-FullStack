@@ -43,7 +43,7 @@ namespace ProyectoInventario.Presentation.Controllers
             }
             catch (KeyNotFoundException ex)
             {
-                return NotFound(new { mensaje = ex.Message });
+                return NotFound(new ErrorResponseDto(ex.Message, null, HttpContext.TraceIdentifier));
             }
         }
 
@@ -57,7 +57,7 @@ namespace ProyectoInventario.Presentation.Controllers
             }
             catch (KeyNotFoundException ex)
             {
-                return NotFound(new { mensaje = ex.Message });
+                return NotFound(new ErrorResponseDto(ex.Message, null, HttpContext.TraceIdentifier));
             }
         }
 

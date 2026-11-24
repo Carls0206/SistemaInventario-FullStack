@@ -9,14 +9,18 @@ using ProyectoInventario.Application.Services;
 using ProyectoInventario.Domain.Interfaces;
 using ProyectoInventario.Infrastructure.Repositories;
 using ProyectoInventario.Infrastructure.Security;
+using ProyectoInventario.Presentation.Middleware;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Host.UseSerilog((context, config) =>
+    config.ReadFrom.Configuration(context.Configuration)
+          .WriteTo.Console()
+          .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day));
 
 builder.Services.AddControllers();
 
-// Repositorios y servicios de autenticación
 builder.Services.AddScoped<IUsuariosRepo, UsuarioRepository>();
 builder.Services.AddScoped<IProductosRepo, ProductoRepository>();
 builder.Services.AddScoped<ILotesRepo, LoteRepository>();
@@ -32,8 +36,7 @@ var conexion = builder.Configuration.GetConnectionString("BaseConexion");
 builder.Services.AddScoped<IDbConnection>(sp => new SqlConnection(conexion));
 
 builder.Services.AddOpenApi();
-//Swagger con bearer token
-builder.Services.AddSwaggerGen(c=>
+builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -50,7 +53,6 @@ builder.Services.AddSwaggerGen(c=>
     });
 });
 
-//CORS Angular 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AngularConexion", policy =>
@@ -61,7 +63,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Autenticación JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -82,7 +83,9 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseSerilogRequestLogging();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

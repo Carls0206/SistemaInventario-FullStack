@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using ProyectoInventario.Application.DTOs;
 using ProyectoInventario.Application.Interfaces;
 using ProyectoInventario.Domain.Entities;
@@ -9,11 +10,13 @@ namespace ProyectoInventario.Application.Services
     {
         private readonly IProductosRepo _productos;
         private readonly IProductoLotesRepo _lotes;
+        private readonly ILogger<ProductoService> _logger;
 
-        public ProductoService(IProductosRepo productos, IProductoLotesRepo lotes)
+        public ProductoService(IProductosRepo productos, IProductoLotesRepo lotes, ILogger<ProductoService> logger)
         {
             _productos = productos;
             _lotes = lotes;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<ProductoResponseDto>> GetAllAsync()
@@ -54,25 +57,35 @@ namespace ProyectoInventario.Application.Services
             var id = await _productos.CrearProductoAsync(producto);
             producto.Id = id;
 
+            _logger.LogInformation("Producto creado: {Codigo} Id {ProductoId}", producto.Codigo, producto.Id);
             return new ProductoResponseDto(producto.Id, producto.Codigo, producto.Nombre, producto.Descripcion, producto.Precio, producto.Estado);
         }
 
         public async Task<bool> UpdateAsync(int id, ProductoUpdateDto dto)
         {
             var existente = await _productos.GetByIdAsync(id);
-            if (existente is null) return false;
+            if (existente is null)
+            {
+                _logger.LogWarning("Actualización de producto fallida: Id {ProductoId} no existe", id);
+                return false;
+            }
 
             existente.Nombre = dto.Nombre;
             existente.Descripcion = dto.Descripcion;
             existente.Precio = dto.Precio;
             existente.Estado = dto.Estado;
 
-            return await _productos.ActualizarProductoAsync(existente);
+            var ok = await _productos.ActualizarProductoAsync(existente);
+            if (ok) _logger.LogInformation("Producto actualizado: Id {ProductoId}", id);
+            return ok;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            return await _productos.EliminarProductoAsync(id);
+            var ok = await _productos.EliminarProductoAsync(id);
+            if (ok) _logger.LogInformation("Producto eliminado lógicamente: Id {ProductoId}", id);
+            else _logger.LogWarning("Eliminación de producto fallida: Id {ProductoId} no existe", id);
+            return ok;
         }
     }
 }

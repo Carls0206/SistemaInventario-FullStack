@@ -3,11 +3,11 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ProyectoInventario.Application.Interfaces;
-using ProyectoInventario.Dominio.Entidades;
+using ProyectoInventario.Domain.Entities;
 
 namespace ProyectoInventario.Infrastructure.Security
 {
-    public class JwtTokenService
+    public class JwtTokenService : ITokenService
     {
         private readonly IConfiguration _config;
 

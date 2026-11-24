@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|c:\\users\\carlos\\documents\\practicas\\prueba bg\\proyectoinventario_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|c:\\users\\carlos\\documents\\practicas\\prueba bg\\proyectoinventario_backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|c:\\users\\carlos\\documents\\practicas\\prueba bg\\proyectoinventario_backend\\proyectoinventario.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|solutionrelative:proyectoinventario.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|c:\\users\\carlos\\documents\\practicas\\prueba bg\\proyectoinventario_backend\\presentation\\controllers\\lotescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|solutionrelative:presentation\\controllers\\lotescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|c:\\users\\carlos\\documents\\practicas\\prueba bg\\proyectoinventario_backend\\presentation\\controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|solutionrelative:presentation\\controllers\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|c:\\users\\carlos\\documents\\practicas\\prueba bg\\proyectoinventario_backend\\presentation\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|solutionrelative:presentation\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|c:\\users\\carlos\\documents\\practicas\\prueba bg\\proyectoinventario_backend\\infrastructure\\security\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F023CE67-40CB-C8AC-F7DB-2D64E34B8F73}|ProyectoInventario.csproj|solutionrelative:infrastructure\\security\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -42,7 +66,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "01_schema.sql ",
               "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Database\\01_schema.sql",
               "RelativeDocumentMoniker": "Database\\01_schema.sql",
@@ -56,7 +80,91 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProyectoInventario",
+              "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\ProyectoInventario.csproj",
+              "RelativeDocumentMoniker": "ProyectoInventario.csproj",
+              "ToolTip": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\ProyectoInventario.csproj",
+              "RelativeToolTip": "ProyectoInventario.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-24T05:48:28.321Z",
+              "EditorCaption": "",
+              "OwnerCaption": "ProyectoInventario"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-24T05:45:22.581Z",
+              "EditorCaption": "",
+              "OwnerCaption": "%2"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-11-24T05:40:38.396Z",
+              "EditorCaption": "",
+              "OwnerCaption": "%2"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProductosController.cs",
+              "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Presentation\\Controllers\\ProductosController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\ProductosController.cs",
+              "ToolTip": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Presentation\\Controllers\\ProductosController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\ProductosController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-24T05:42:29.896Z",
+              "EditorCaption": "",
+              "OwnerCaption": "%2"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LotesController.cs",
+              "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Presentation\\Controllers\\LotesController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\LotesController.cs",
+              "ToolTip": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Presentation\\Controllers\\LotesController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\LotesController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAIwBYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-24T05:42:21.341Z",
+              "EditorCaption": "",
+              "OwnerCaption": "%2"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Presentation\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Presentation\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-24T05:42:12.743Z",
+              "EditorCaption": "",
+              "OwnerCaption": "%2"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "IProductoLoteService.cs",
               "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Application\\Interfaces\\IProductoLoteService.cs",
               "RelativeDocumentMoniker": "Application\\Interfaces\\IProductoLoteService.cs",
@@ -70,13 +178,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "JwtTokenService.cs",
               "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Infrastructure\\Security\\JwtTokenService.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Security\\JwtTokenService.cs",
               "ToolTip": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Infrastructure\\Security\\JwtTokenService.cs",
               "RelativeToolTip": "Infrastructure\\Security\\JwtTokenService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBEAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-11-24T05:20:16.726Z",
               "EditorCaption": "",
@@ -84,7 +192,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "UsuarioRepository.cs",
               "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Infrastructure\\Repositories\\UsuarioRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repositories\\UsuarioRepository.cs",
@@ -98,7 +206,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "ProductoRepository.cs",
               "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Infrastructure\\Repositories\\ProductoRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repositories\\ProductoRepository.cs",
@@ -112,7 +220,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "ProductoLoteRepository.cs",
               "DocumentMoniker": "C:\\Users\\Carlos\\Documents\\PRACTICAS\\PRUEBA BG\\ProyectoInventario_backend\\Infrastructure\\Repositories\\ProductoLoteRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repositories\\ProductoLoteRepository.cs",

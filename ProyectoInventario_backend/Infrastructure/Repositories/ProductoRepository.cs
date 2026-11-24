@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Dapper;
 using ProyectoInventario.Domain.Interfaces;
-using ProyectoInventario.Dominio.Entidades;
+using ProyectoInventario.Domain.Entities;
 
 namespace ProyectoInventario.Infrastructure.Repositories
 {

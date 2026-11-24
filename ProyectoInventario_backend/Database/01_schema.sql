@@ -2,7 +2,7 @@ CREATE TABLE [dbo].Usuario
 (
 	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	Nombre varchar(50) not null, 
-	Email varchar(100) not null, 
+	Email varchar(100) not null UNIQUE, 
 	contraseña varchar(100) not null,
 	Activo bit not null,
 	FechaCreacion datetime not null default getdate()

@@ -1,4 +1,4 @@
-﻿namespace ProyectoInventario.Dominio.Entidades
+﻿namespace ProyectoInventario.Domain.Entities
 {
     public class Producto
     {

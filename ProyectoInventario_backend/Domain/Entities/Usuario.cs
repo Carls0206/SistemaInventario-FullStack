@@ -1,4 +1,4 @@
-﻿namespace ProyectoInventario.Dominio.Entidades
+﻿namespace ProyectoInventario.Domain.Entities
 {
     public class Usuario
     {
@@ -7,6 +7,6 @@
         public string Email { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public bool Activo { get; set; } = true;
-        public DateTime FechaCreacion { get; set; } = DateTime.Today;
+        public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
     }
 }

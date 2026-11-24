@@ -1,4 +1,4 @@
-﻿using ProyectoInventario.Dominio.Entidades;
+﻿using ProyectoInventario.Domain.Entities;
 
 namespace ProyectoInventario.Domain.Interfaces
 {

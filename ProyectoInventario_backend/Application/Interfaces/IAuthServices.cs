@@ -1,12 +1,11 @@
 ﻿using ProyectoInventario.Application.DTOs.Auth;
-using ProyectoInventario.Dominio.Entidades;
+using ProyectoInventario.Domain.Entities;
 
 namespace ProyectoInventario.Application.Interfaces
 {
     public interface ITokenService
     {
-        string GenerateToken(Usuario usuario);
-        DateTime GetExpiration();
+        (string Token, DateTime Expiration) GenerateToken(Usuario usuario);
     }
 
     public interface IPasswordHasher
@@ -18,5 +17,6 @@ namespace ProyectoInventario.Application.Interfaces
     public interface IAuthService
     {
         Task<LoginResponseDto?> LoginAsync(LoginRequestDto request);
+        Task<UsuarioDto?> RegisterAsync(RegisterRequestDto request);
     }
 }

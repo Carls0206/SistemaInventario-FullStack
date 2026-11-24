@@ -15,7 +15,7 @@ namespace ProyectoInventario.Infrastructure.Repositories
 
         public async Task<IEnumerable<Producto>> GetAllAsync()
         {
-            const string sql = "SELECT Id, Codigo, Nombre, Descripcion, Precio, Estado FROM Producto WHERE Estado <> 'N'";
+            const string sql = "SELECT Id, Codigo, Nombre, Descripcion, Precio, Estado FROM Producto WHERE Estado <> 'N' ORDER BY Id DESC";
             return await _conn.QueryAsync<Producto>(sql);
         }
 

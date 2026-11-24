@@ -16,13 +16,13 @@ namespace ProyectoInventario.Infrastructure.Repositories
 
         public async Task<IEnumerable<ProductoLote>> GetAllAsync()
         {
-            const string sql = "SELECT Id, ProductoId, LoteId, FechaIngreso, PrecioUnitario, Cantidad, Estado FROM ProductoLote WHERE Estado <> 'N' ORDER BY Id";
+            const string sql = "SELECT Id, ProductoId, LoteId, FechaIngreso, PrecioUnitario, Cantidad, Estado FROM ProductoLote WHERE Estado <> 'N' ORDER BY Id DESC";
             return await _conn.QueryAsync<ProductoLote>(sql);
         }
 
         public async Task<IEnumerable<ProductoLote>> GetByProductoIdAsync(int productoId)
         {
-            const string sql = "SELECT Id, ProductoId, LoteId, FechaIngreso, PrecioUnitario, Cantidad, Estado FROM ProductoLote WHERE ProductoId = @ProductoId AND Estado <> 'N'";
+            const string sql = "SELECT Id, ProductoId, LoteId, FechaIngreso, PrecioUnitario, Cantidad, Estado FROM ProductoLote WHERE ProductoId = @ProductoId AND Estado <> 'N' ORDER BY Id DESC";
             return await _conn.QueryAsync<ProductoLote>(sql, new { ProductoId = productoId });
         }
 

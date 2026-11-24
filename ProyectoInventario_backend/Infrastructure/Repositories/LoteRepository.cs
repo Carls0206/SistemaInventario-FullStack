@@ -16,7 +16,7 @@ namespace ProyectoInventario.Infrastructure.Repositories
 
         public async Task<IEnumerable<Lote>> GetAllAsync()
         {
-            const string sql = "SELECT Id, NumeroLote, FechaCreacion, Estado FROM Lote WHERE Estado <> 'N' ORDER BY Id";
+            const string sql = "SELECT Id, NumeroLote, FechaCreacion, Estado FROM Lote WHERE Estado <> 'N' ORDER BY Id DESC";
             return await _conn.QueryAsync<Lote>(sql);
         }
 

@@ -1,1 +1,38 @@
-<p>producto-form works!</p>
+<div class="container py-4" style="max-width: 640px;">
+  <h2 class="mb-3">{{ id ? 'Editar producto' : 'Nuevo producto' }}</h2>
+
+  @if (error) {
+    <div class="alert alert-danger">{{ error }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="mb-3">
+      <label class="form-label">Código</label>
+      <input class="form-control" formControlName="codigo" [disabled]="!!id" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input class="form-control" formControlName="nombre" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Descripción</label>
+      <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
+    </div>
+
+    @if (id) {
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" formControlName="activo" id="activo" />
+        <label class="form-check-label" for="activo">Activo</label>
+      </div>
+    }
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" type="submit" [disabled]="loading">
+        {{ loading ? 'Guardando...' : 'Guardar' }}
+      </button>
+      <a class="btn btn-outline-secondary" routerLink="/productos">Cancelar</a>
+    </div>
+  </form>
+</div>

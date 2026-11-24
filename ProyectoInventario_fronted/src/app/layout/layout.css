@@ -1,0 +1,21 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 240px;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-title {
+  margin-left: 0.5rem;
+}
+
+.page-content {
+  min-height: calc(100vh - 64px);
+}

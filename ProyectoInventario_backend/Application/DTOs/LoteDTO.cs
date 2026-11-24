@@ -1,8 +1,14 @@
 ﻿namespace ProyectoInventario.Application.DTOs
 {
-    public record ProductoLoteCreateDto(int ProductoId, string NumeroLote, DateTime? FechaIngreso, decimal PrecioUnitario, int Cantidad);
+    public record LoteCreateDto(string NumeroLote);
 
-    public record ProductoLoteUpdateDto(string NumeroLote, DateTime? FechaIngreso, decimal PrecioUnitario, int Cantidad);
+    public record LoteUpdateDto(string NumeroLote, string Estado);
 
-    public record ProductoLoteResponseDto(int Id, int ProductoId, string NumeroLote, DateTime? FechaIngreso, decimal PrecioUnitario, int Cantidad);
+    public record LoteResponseDto(int Id, string NumeroLote, DateTime? FechaCreacion, string Estado);
+
+    public record ProductoLoteCreateDto(int ProductoId, int LoteId, DateTime? FechaIngreso, decimal PrecioUnitario, int Cantidad);
+
+    public record ProductoLoteUpdateDto(int LoteId, DateTime? FechaIngreso, decimal PrecioUnitario, int Cantidad, string Estado);
+
+    public record ProductoLoteResponseDto(int Id, int ProductoId, int LoteId, DateTime? FechaIngreso, decimal PrecioUnitario, int Cantidad, string Estado);
 }

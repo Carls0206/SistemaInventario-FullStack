@@ -19,11 +19,13 @@ builder.Services.AddControllers();
 // Repositorios y servicios de autenticación
 builder.Services.AddScoped<IUsuariosRepo, UsuarioRepository>();
 builder.Services.AddScoped<IProductosRepo, ProductoRepository>();
+builder.Services.AddScoped<ILotesRepo, LoteRepository>();
 builder.Services.AddScoped<IProductoLotesRepo, ProductoLoteRepository>();
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ILoteService, LoteService>();
 builder.Services.AddScoped<IProductoLoteService, ProductoLoteService>();
 
 var conexion = builder.Configuration.GetConnectionString("BaseConexion");
@@ -35,10 +37,12 @@ builder.Services.AddSwaggerGen(c=>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        In = ParameterLocation.Header,
-        Description = "Please enter JWT with Bearer prefix",
         Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Ingrese el token JWT"
     });
     c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
@@ -87,7 +91,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors("AngularConexion");
 app.UseAuthentication();
 app.UseAuthorization();
 

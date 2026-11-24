@@ -21,14 +21,14 @@ namespace ProyectoInventario.Application.Services
         public async Task<LoginResponseDto?> LoginAsync(LoginRequestDto request)
         {
             var usuario = await _usuarios.ObtenerPorCorreoAsync(request.Email);
-            if (usuario is null || !usuario.Activo)
+            if (usuario is null || usuario.Estado != "A")
                 return null;
 
             if (!_hasher.Verify(request.Password, usuario.PasswordHash))
                 return null;
 
             var (token, expiration) = _token.GenerateToken(usuario);
-            return new LoginResponseDto(token, expiration, new UsuarioDto(usuario.Id, usuario.Nombre, usuario.Email));
+            return new LoginResponseDto(token, expiration, new UsuarioDto(usuario.Id, usuario.Nombre, usuario.Email, usuario.Rol));
         }
 
         public async Task<UsuarioDto?> RegisterAsync(RegisterRequestDto request)
@@ -42,14 +42,15 @@ namespace ProyectoInventario.Application.Services
                 Nombre = request.Nombre,
                 Email = request.Email,
                 PasswordHash = _hasher.Hash(request.Password),
-                Activo = true,
+                Estado = "A",
+                Rol = "User",
                 FechaCreacion = DateTime.UtcNow
             };
 
             var id = await _usuarios.CrearUsuario(usuario);
             usuario.Id = id;
 
-            return new UsuarioDto(id, usuario.Nombre, usuario.Email);
+            return new UsuarioDto(id, usuario.Nombre, usuario.Email, usuario.Rol);
         }
     }
 }

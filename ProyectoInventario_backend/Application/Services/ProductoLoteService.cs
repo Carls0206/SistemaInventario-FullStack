@@ -7,25 +7,33 @@ namespace ProyectoInventario.Application.Services
 {
     public class ProductoLoteService : IProductoLoteService
     {
-        private readonly IProductoLotesRepo _lotes;
+        private readonly IProductoLotesRepo _productoLotes;
         private readonly IProductosRepo _productos;
+        private readonly ILotesRepo _lotes;
 
-        public ProductoLoteService(IProductoLotesRepo lotes, IProductosRepo productos)
+        public ProductoLoteService(IProductoLotesRepo productoLotes, IProductosRepo productos, ILotesRepo lotes)
         {
-            _lotes = lotes;
+            _productoLotes = productoLotes;
             _productos = productos;
+            _lotes = lotes;
+        }
+
+        public async Task<IEnumerable<ProductoLoteResponseDto>> GetAllAsync()
+        {
+            var lotes = await _productoLotes.GetAllAsync();
+            return lotes.Select(MapToDto);
         }
 
         public async Task<IEnumerable<ProductoLoteResponseDto>> GetByProductoIdAsync(int productoId)
         {
-            var lotes = await _lotes.GetByProductoIdAsync(productoId);
-            return lotes.Select(l => new ProductoLoteResponseDto(l.Id, l.ProductoId, l.NumeroLote, l.FechaIngreso, l.PrecioUnitario, l.Cantidad));
+            var lotes = await _productoLotes.GetByProductoIdAsync(productoId);
+            return lotes.Select(MapToDto);
         }
 
         public async Task<ProductoLoteResponseDto?> GetByIdAsync(int id)
         {
-            var l = await _lotes.GetByIdAsync(id);
-            return l is null ? null : new ProductoLoteResponseDto(l.Id, l.ProductoId, l.NumeroLote, l.FechaIngreso, l.PrecioUnitario, l.Cantidad);
+            var lote = await _productoLotes.GetByIdAsync(id);
+            return lote is null ? null : MapToDto(lote);
         }
 
         public async Task<ProductoLoteResponseDto> CreateAsync(ProductoLoteCreateDto dto)
@@ -34,37 +42,57 @@ namespace ProyectoInventario.Application.Services
             if (producto is null)
                 throw new KeyNotFoundException($"No existe el producto con Id {dto.ProductoId}.");
 
-            var lote = new ProductoLote
+            var lote = await _lotes.GetByIdAsync(dto.LoteId);
+            if (lote is null)
+                throw new KeyNotFoundException($"No existe el lote con Id {dto.LoteId}.");
+
+            var entity = new ProductoLote
             {
                 ProductoId = dto.ProductoId,
-                NumeroLote = dto.NumeroLote,
+                LoteId = dto.LoteId,
                 FechaIngreso = dto.FechaIngreso,
                 PrecioUnitario = dto.PrecioUnitario,
-                Cantidad = dto.Cantidad
+                Cantidad = dto.Cantidad,
+                Estado = "A"
             };
 
-            var id = await _lotes.CrearLoteAsync(lote);
-            lote.Id = id;
-
-            return new ProductoLoteResponseDto(lote.Id, lote.ProductoId, lote.NumeroLote, lote.FechaIngreso, lote.PrecioUnitario, lote.Cantidad);
+            entity.Id = await _productoLotes.CrearLoteAsync(entity);
+            return MapToDto(entity);
         }
 
         public async Task<bool> UpdateAsync(int id, ProductoLoteUpdateDto dto)
         {
-            var existente = await _lotes.GetByIdAsync(id);
+            var existente = await _productoLotes.GetByIdAsync(id);
             if (existente is null) return false;
 
-            existente.NumeroLote = dto.NumeroLote;
+            var lote = await _lotes.GetByIdAsync(dto.LoteId);
+            if (lote is null)
+                throw new KeyNotFoundException($"No existe el lote con Id {dto.LoteId}.");
+
+            existente.LoteId = dto.LoteId;
             existente.FechaIngreso = dto.FechaIngreso;
             existente.PrecioUnitario = dto.PrecioUnitario;
             existente.Cantidad = dto.Cantidad;
+            existente.Estado = dto.Estado;
 
-            return await _lotes.ActualizarLoteAsync(existente);
+            return await _productoLotes.ActualizarLoteAsync(existente);
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            return await _lotes.EliminarLoteAsync(id);
+            return await _productoLotes.EliminarLoteAsync(id);
+        }
+
+        private static ProductoLoteResponseDto MapToDto(ProductoLote lote)
+        {
+            return new ProductoLoteResponseDto(
+                lote.Id,
+                lote.ProductoId,
+                lote.LoteId,
+                lote.FechaIngreso,
+                lote.PrecioUnitario,
+                lote.Cantidad,
+                lote.Estado);
         }
     }
 }

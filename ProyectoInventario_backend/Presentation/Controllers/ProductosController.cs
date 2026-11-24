@@ -15,7 +15,10 @@ namespace ProyectoInventario.Presentation.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductoResponseDto>>> GetAll()
-            => Ok(await _service.GetAllAsync());
+        {
+            return Ok(await _service.GetAllAsync());
+        }
+            
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<ProductoResponseDto>> GetById(int id)

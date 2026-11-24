@@ -6,7 +6,8 @@
         public string Nombre { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
-        public bool Activo { get; set; } = true;
+        public string Estado { get; set; } = "A";
+        public string Rol { get; set; } = "User";
         public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
     }
 }

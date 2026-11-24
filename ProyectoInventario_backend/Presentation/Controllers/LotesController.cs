@@ -10,39 +10,49 @@ namespace ProyectoInventario.Presentation.Controllers
     [Authorize]
     public class LotesController : ControllerBase
     {
-        private readonly IProductoLoteService _service;
-        public LotesController(IProductoLoteService service) => _service = service;
+        private readonly ILoteService _service;
 
-        [HttpGet("producto/{productoId:int}")]
-        public async Task<ActionResult<IEnumerable<ProductoLoteResponseDto>>> GetByProducto(int productoId)
-            => Ok(await _service.GetByProductoIdAsync(productoId));
+        public LotesController(ILoteService service) => _service = service;
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<LoteResponseDto>>> GetAll()
+        {
+            return Ok(await _service.GetAllAsync());
+        }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ProductoLoteResponseDto>> GetById(int id)
+        public async Task<ActionResult<LoteResponseDto>> GetById(int id)
         {
             var dto = await _service.GetByIdAsync(id);
             return dto is null ? NotFound() : Ok(dto);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductoLoteResponseDto>> Create([FromBody] ProductoLoteCreateDto dto)
+        public async Task<ActionResult<LoteResponseDto>> Create([FromBody] LoteCreateDto dto)
         {
             try
             {
                 var created = await _service.CreateAsync(dto);
                 return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
             }
-            catch (KeyNotFoundException ex)
+            catch (InvalidOperationException ex)
             {
-                return NotFound(new { mensaje = ex.Message });
+                return Conflict(new { mensaje = ex.Message });
             }
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ProductoLoteUpdateDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] LoteUpdateDto dto)
         {
-            var ok = await _service.UpdateAsync(id, dto);
-            return ok ? NoContent() : NotFound();
+            try
+            {
+                var ok = await _service.UpdateAsync(id, dto);
+                return ok ? NoContent() : NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { mensaje = ex.Message });
+            }
         }
 
         [HttpDelete("{id:int}")]

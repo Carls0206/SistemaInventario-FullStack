@@ -1,6 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Router, RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../core/services/auth.service';
@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     RouterOutlet,
     RouterLink,
+    RouterLinkActive,
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
@@ -28,7 +29,6 @@ import { MatButtonModule } from '@angular/material/button';
 export class LayoutComponent {
   private breakpointObserver = inject(BreakpointObserver);
   private auth = inject(AuthService);
-  private router = inject(Router);
 
   isHandset = toSignal(
     this.breakpointObserver.observe(Breakpoints.Handset).pipe(map((r) => r.matches)),

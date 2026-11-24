@@ -1,16 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {
-  Producto,
-  ProductoCreate,
-  ProductoDetalle,
-  ProductoUpdate,
-  ProductoLote,
-  ProductoLoteCreate,
-} from '../models/producto.model';
-
-const API_URL = 'http://localhost:5000/api';
+import { API_URL } from '../config/api.config';
+import { Producto, ProductoCreate, ProductoDetalle, ProductoUpdate } from '../models/producto.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductoService {
@@ -38,13 +30,5 @@ export class ProductoService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${API_URL}/productos/${id}`);
-  }
-
-  getLotesByProducto(productoId: number): Observable<ProductoLote[]> {
-    return this.http.get<ProductoLote[]>(`${API_URL}/lotes/producto/${productoId}`);
-  }
-
-  createLote(data: ProductoLoteCreate): Observable<ProductoLote> {
-    return this.http.post<ProductoLote>(`${API_URL}/lotes`, data);
   }
 }

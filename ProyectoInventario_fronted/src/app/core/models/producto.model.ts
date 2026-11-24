@@ -1,40 +1,28 @@
+import { ProductoLote } from './lote.model';
+
 export interface Producto {
   id: number;
   codigo: string;
   nombre: string;
   descripcion?: string | null;
-  activo: boolean;
+  precio: number;
+  estado: string;
 }
 
 export interface ProductoCreate {
   codigo: string;
   nombre: string;
   descripcion?: string | null;
+  precio: number;
 }
 
 export interface ProductoUpdate {
   nombre: string;
   descripcion?: string | null;
-  activo: boolean;
+  precio: number;
+  estado: string;
 }
 
 export interface ProductoDetalle extends Producto {
   lotes: ProductoLote[];
-}
-
-export interface ProductoLote {
-  id: number;
-  productoId: number;
-  numeroLote: string;
-  fechaIngreso?: string | null;
-  precioUnitario: number;
-  cantidad: number;
-}
-
-export interface ProductoLoteCreate {
-  productoId: number;
-  numeroLote: string;
-  fechaIngreso?: string | null;
-  precioUnitario: number;
-  cantidad: number;
 }

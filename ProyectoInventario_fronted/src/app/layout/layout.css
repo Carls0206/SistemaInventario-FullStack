@@ -1,9 +1,31 @@
 .sidenav-container {
-  height: 100vh;
+  height: 100dvh;
+  background: #f5f7fa;
 }
 
 .sidenav {
   width: 240px;
+  background: #ffffff;
+  border-right: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.sidenav-title {
+  padding: 1rem 1rem 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+mat-nav-list a {
+  color: #374151;
+}
+
+mat-nav-list a.active {
+  background: #e8f0fe;
+  color: #1a73e8;
+}
+
+mat-nav-list a mat-icon {
+  color: inherit;
 }
 
 .topbar {
@@ -12,10 +34,18 @@
   z-index: 10;
 }
 
-.app-title {
-  margin-left: 0.5rem;
+.spacer {
+  flex: 1 1 auto;
 }
 
 .page-content {
-  min-height: calc(100vh - 64px);
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 1.5rem;
+}
+
+@media (max-width: 599px) {
+  .page-content {
+    padding: 1rem;
+  }
 }

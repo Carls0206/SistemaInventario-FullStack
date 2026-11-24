@@ -1,0 +1,7 @@
+.form-card {
+  border-radius: 10px;
+}
+
+.form-card mat-form-field {
+  width: 100%;
+}

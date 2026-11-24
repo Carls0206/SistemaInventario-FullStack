@@ -1,0 +1,168 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 mb-0">Entradas por lote</h1>
+</div>
+
+@if (error) {
+  <div class="alert alert-danger py-2" role="alert">{{ error }}</div>
+}
+
+<mat-card class="mb-4">
+  <mat-card-content>
+    <h2 class="h6 mb-3">{{ editingId ? 'Editar entrada' : 'Nueva entrada' }}</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="row g-3">
+      <div class="col-12 col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Producto</mat-label>
+          <mat-select formControlName="productoId">
+            @for (producto of productos; track producto.id) {
+              <mat-option [value]="producto.id">{{ producto.codigo }} - {{ producto.nombre }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.productoId.touched && form.controls.productoId.hasError('required')) {
+            <mat-error>El producto es obligatorio</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Lote</mat-label>
+          <mat-select formControlName="loteId">
+            @for (lote of lotes; track lote.id) {
+              <mat-option [value]="lote.id">{{ lote.numeroLote }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.loteId.touched && form.controls.loteId.hasError('required')) {
+            <mat-error>El lote es obligatorio</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha ingreso</mat-label>
+          <input matInput [matDatepicker]="pickerIngreso" formControlName="fechaIngreso" />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerIngreso"></mat-datepicker-toggle>
+          <mat-datepicker #pickerIngreso></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Precio unitario</mat-label>
+          <input matInput type="number" min="0" step="0.01" formControlName="precioUnitario" />
+          @if (form.controls.precioUnitario.touched && form.controls.precioUnitario.hasError('required')) {
+            <mat-error>El precio es obligatorio</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Cantidad</mat-label>
+          <input matInput type="number" min="0" step="1" formControlName="cantidad" />
+          @if (form.controls.cantidad.touched && form.controls.cantidad.hasError('required')) {
+            <mat-error>La cantidad es obligatoria</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      @if (editingId) {
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="estado">
+              <mat-option value="A">Activo</mat-option>
+              <mat-option value="I">Desactivado</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      }
+
+      <div class="col-12 d-flex gap-2">
+        <button mat-flat-button color="primary" type="submit" [disabled]="saving">
+          @if (saving) {
+            <mat-spinner diameter="18"></mat-spinner>
+          } @else {
+            {{ editingId ? 'Actualizar' : 'Guardar' }}
+          }
+        </button>
+        @if (editingId) {
+          <button mat-stroked-button type="button" (click)="cancelEdit()">Cancelar</button>
+        }
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    @if (loading) {
+      <div class="loading">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table mat-table [dataSource]="productoLotes" class="w-100">
+          <ng-container matColumnDef="producto">
+            <th mat-header-cell *matHeaderCellDef>Producto</th>
+            <td mat-cell *matCellDef="let item">{{ nombreProducto(item.productoId) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="lote">
+            <th mat-header-cell *matHeaderCellDef>Lote</th>
+            <td mat-cell *matCellDef="let item">{{ numeroLote(item.loteId) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaIngreso">
+            <th mat-header-cell *matHeaderCellDef>Fecha ingreso</th>
+            <td mat-cell *matCellDef="let item">
+              {{ item.fechaIngreso ? (item.fechaIngreso | date: 'dd/MM/yyyy') : '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="precioUnitario">
+            <th mat-header-cell *matHeaderCellDef>Precio</th>
+            <td mat-cell *matCellDef="let item">{{ item.precioUnitario | number: '1.2-2' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+            <td mat-cell *matCellDef="let item">{{ item.cantidad }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef>Estado</th>
+            <td mat-cell *matCellDef="let item">
+              <span
+                class="badge"
+                [class.bg-success]="item.estado === 'A'"
+                [class.bg-warning]="item.estado === 'I'"
+                [class.text-dark]="item.estado === 'I'"
+                [class.bg-secondary]="item.estado === 'N'"
+              >
+                {{ item.estado === 'A' ? 'Activo' : item.estado === 'I' ? 'Desactivado' : 'Eliminado' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef class="text-end">Acciones</th>
+            <td mat-cell *matCellDef="let item" class="text-end">
+              <button mat-button color="primary" (click)="edit(item)">Editar</button>
+              <button mat-button color="warn" (click)="remove(item)">Eliminar</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell text-center text-muted py-4" [attr.colspan]="displayedColumns.length">
+              No hay entradas registradas
+            </td>
+          </tr>
+        </table>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,22 @@
+.table-card {
+  border-radius: 10px;
+}
+
+.loading {
+  display: grid;
+  place-items: center;
+  min-height: 200px;
+}
+
+table {
+  background: transparent;
+}
+
+th.mat-mdc-header-cell {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+td.mat-mdc-cell {
+  color: #1f2937;
+}

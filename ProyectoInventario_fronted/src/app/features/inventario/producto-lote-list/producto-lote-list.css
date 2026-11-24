@@ -1,0 +1,18 @@
+mat-form-field {
+  width: 100%;
+}
+
+.loading {
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+}
+
+table {
+  background: transparent;
+}
+
+th.mat-mdc-header-cell {
+  color: #6b7280;
+  font-weight: 500;
+}

@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { FormBuilder, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { Lote } from '../../../core/models/lote.model';
@@ -28,7 +28,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatSelectModule,
+    MatSlideToggleModule,
     MatSnackBarModule,
     MatTableModule,
   ],
@@ -41,17 +41,18 @@ export class LoteListComponent implements OnInit {
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
+  @ViewChild(FormGroupDirective) private formDir?: FormGroupDirective;
 
   lotes: Lote[] = [];
   loading = false;
   saving = false;
   error = '';
   editingId: number | null = null;
+  editingEstado = 'A';
   readonly displayedColumns = ['numeroLote', 'fechaCreacion', 'estado', 'acciones'];
 
   form = this.fb.group({
     numeroLote: ['', [Validators.required, Validators.maxLength(50)]],
-    estado: ['A', [Validators.required]],
   });
 
   ngOnInit(): void {
@@ -78,12 +79,14 @@ export class LoteListComponent implements OnInit {
 
   edit(lote: Lote): void {
     this.editingId = lote.id;
-    this.form.patchValue({ numeroLote: lote.numeroLote, estado: lote.estado });
+    this.editingEstado = lote.estado;
+    this.form.patchValue({ numeroLote: lote.numeroLote });
   }
 
   cancelEdit(): void {
     this.editingId = null;
-    this.form.reset({ numeroLote: '', estado: 'A' });
+    this.editingEstado = 'A';
+    this.formDir?.resetForm({ numeroLote: '' });
   }
 
   submit(): void {
@@ -100,7 +103,7 @@ export class LoteListComponent implements OnInit {
       this.snackBar.open(
         this.editingId ? 'Lote actualizado correctamente' : 'Lote creado correctamente',
         'Cerrar',
-        { duration: 3000 },
+        { duration: 3000, panelClass: ['snackbar-success'] },
       );
       this.cancelEdit();
       this.load();
@@ -116,7 +119,7 @@ export class LoteListComponent implements OnInit {
       this.service
         .update(this.editingId, {
           numeroLote: this.form.controls.numeroLote.value!,
-          estado: this.form.controls.estado.value!,
+          estado: this.editingEstado,
         })
         .subscribe({ next: onSuccess, error: onError });
     } else {
@@ -124,6 +127,28 @@ export class LoteListComponent implements OnInit {
         .create({ numeroLote: this.form.controls.numeroLote.value! })
         .subscribe({ next: onSuccess, error: onError });
     }
+  }
+
+  toggleEstado(lote: Lote): void {
+    const nuevoEstado = lote.estado === 'A' ? 'I' : 'A';
+    this.service
+      .update(lote.id, { numeroLote: lote.numeroLote, estado: nuevoEstado })
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Estado actualizado correctamente', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['snackbar-success'],
+          });
+          this.load();
+        },
+        error: () => {
+          this.snackBar.open('No se pudo actualizar el estado', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['snackbar-error'],
+          });
+          this.load();
+        },
+      });
   }
 
   remove(lote: Lote): void {
@@ -142,11 +167,11 @@ export class LoteListComponent implements OnInit {
 
       this.service.delete(lote.id).subscribe({
         next: () => {
-          this.snackBar.open('Lote eliminado correctamente', 'Cerrar', { duration: 3000 });
+          this.snackBar.open('Lote eliminado correctamente', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
           this.load();
         },
         error: () => {
-          this.snackBar.open('No se pudo eliminar el lote', 'Cerrar', { duration: 3000 });
+          this.snackBar.open('No se pudo eliminar el lote', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
         },
       });
     });

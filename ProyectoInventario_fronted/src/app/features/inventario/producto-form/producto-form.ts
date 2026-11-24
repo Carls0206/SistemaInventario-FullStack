@@ -98,7 +98,7 @@ export class ProductoFormComponent implements OnInit {
       this.service.update(this.id, data).subscribe({
         next: () => {
           this.loading = false;
-          this.snackBar.open('Producto actualizado correctamente', 'Cerrar', { duration: 3000 });
+          this.snackBar.open('Producto actualizado correctamente', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
           this.router.navigate(['/productos']);
         },
         error: () => {
@@ -118,7 +118,7 @@ export class ProductoFormComponent implements OnInit {
       this.service.create(data).subscribe({
         next: () => {
           this.loading = false;
-          this.snackBar.open('Producto creado correctamente', 'Cerrar', { duration: 3000 });
+          this.snackBar.open('Producto creado correctamente', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
           this.router.navigate(['/productos']);
         },
         error: () => {

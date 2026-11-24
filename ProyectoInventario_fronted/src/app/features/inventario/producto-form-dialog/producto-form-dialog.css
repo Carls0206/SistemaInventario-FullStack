@@ -1,0 +1,7 @@
+mat-form-field {
+  width: 100%;
+}
+
+mat-dialog-content {
+  min-width: min(720px, 90vw);
+}

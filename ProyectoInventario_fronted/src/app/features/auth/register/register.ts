@@ -74,7 +74,7 @@ export class Register {
     this.auth.register({ nombre: nombre!, email: email!, password: password! }).subscribe({
       next: () => {
         this.loading = false;
-        this.snackBar.open('Usuario registrado correctamente', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Usuario registrado correctamente', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
         this.router.navigate(['/login']);
       },
       error: (err) => {

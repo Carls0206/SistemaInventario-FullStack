@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>{{ editingId ? 'Editar producto' : 'Nuevo producto' }}</h2>
+
+<mat-dialog-content>
+  @if (error) {
+    <div class="alert alert-danger py-2 mb-3" role="alert">{{ error }}</div>
+  }
+
+  <form [formGroup]="form" id="productoForm" (ngSubmit)="submit()" class="row g-3 pt-2">
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Código</mat-label>
+        <input matInput formControlName="codigo" maxlength="20" />
+        @if (form.controls.codigo.touched && form.controls.codigo.hasError('required')) {
+          <mat-error>El código es obligatorio</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" maxlength="50" />
+        @if (form.controls.nombre.touched && form.controls.nombre.hasError('required')) {
+          <mat-error>El nombre es obligatorio</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Precio</mat-label>
+        <input matInput type="number" min="0" step="0.01" formControlName="precio" />
+        @if (form.controls.precio.touched && form.controls.precio.hasError('required')) {
+          <mat-error>El precio es obligatorio</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+
+
+    <div class="col-12">
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="descripcion" rows="3" maxlength="200"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" type="submit" form="productoForm" [disabled]="saving">
+    @if (saving) {
+      <mat-spinner diameter="18"></mat-spinner>
+    } @else {
+      Guardar
+    }
+  </button>
+</mat-dialog-actions>

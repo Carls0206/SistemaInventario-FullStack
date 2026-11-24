@@ -3,12 +3,12 @@
 </div>
 
 @if (error) {
-  <div class="alert alert-danger py-2" role="alert">{{ error }}</div>
+  <div class="alert alert-danger py-2 mb-3" role="alert">{{ error }}</div>
 }
 
 <mat-card class="mb-4">
   <mat-card-content>
-    <h2 class="h6 mb-3">{{ editingId ? 'Editar lote' : 'Nuevo lote' }}</h2>
+    <h2 class="h6 mb-3">{{ editingId ? 'Editar lote' : 'Código lote' }}</h2>
     <form [formGroup]="form" (ngSubmit)="submit()" class="d-flex flex-wrap gap-2 align-items-start">
       <mat-form-field appearance="outline" class="lote-field">
         <mat-label>Número de lote</mat-label>
@@ -20,16 +20,6 @@
           <mat-error>Máximo 50 caracteres</mat-error>
         }
       </mat-form-field>
-
-      @if (editingId) {
-        <mat-form-field appearance="outline" class="lote-field">
-          <mat-label>Estado</mat-label>
-          <mat-select formControlName="estado">
-            <mat-option value="A">Activo</mat-option>
-            <mat-option value="I">Desactivado</mat-option>
-          </mat-select>
-        </mat-form-field>
-      }
 
       <button mat-flat-button color="primary" type="submit" [disabled]="saving">
         @if (saving) {
@@ -70,30 +60,36 @@
           <ng-container matColumnDef="estado">
             <th mat-header-cell *matHeaderCellDef>Estado</th>
             <td mat-cell *matCellDef="let lote">
-              <span
-                class="badge"
-                [class.bg-success]="lote.estado === 'A'"
-                [class.bg-warning]="lote.estado === 'I'"
-                [class.text-dark]="lote.estado === 'I'"
-                [class.bg-secondary]="lote.estado === 'N'"
-              >
-                {{ lote.estado === 'A' ? 'Activo' : lote.estado === 'I' ? 'Desactivado' : 'Eliminado' }}
-              </span>
+              <mat-slide-toggle
+                [checked]="lote.estado === 'A'"
+                (change)="toggleEstado(lote)"
+                color="primary"
+                aria-label="Cambiar estado"
+              ></mat-slide-toggle>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="acciones">
             <th mat-header-cell *matHeaderCellDef class="text-end">Acciones</th>
             <td mat-cell *matCellDef="let lote" class="text-end">
-              <button mat-button color="primary" (click)="edit(lote)">Editar</button>
-              <button mat-button color="warn" (click)="remove(lote)">Eliminar</button>
+              <div class="d-inline-flex gap-1">
+                <button mat-icon-button color="primary" (click)="edit(lote)" aria-label="Editar">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="remove(lote)" aria-label="Eliminar">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell text-center text-muted py-4" [attr.colspan]="displayedColumns.length">
+            <td
+              class="mat-cell text-center text-muted py-4"
+              [attr.colspan]="displayedColumns.length"
+            >
               No hay lotes registrados
             </td>
           </tr>

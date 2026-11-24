@@ -1,0 +1,98 @@
+<div class="inventory-dialog">
+  <mat-dialog-content class="dialog-content">
+    <div class="dialog-header">
+      <h2 class="dialog-title">Inventario de productos</h2>
+      <div class="dialog-divider"></div>
+      <p class="dialog-subtitle">{{ editingId ? 'Editar ingreso de producto' : 'Registrar ingreso de producto' }}</p>
+      <p class="dialog-description">
+        {{ editingId ? 'Actualice la información del ingreso seleccionado.' : 'Seleccione el producto y lote al que desea asignar existencias.' }}
+      </p>
+    </div>
+
+    @if (error) {
+      <div class="alert alert-danger py-2 mb-3" role="alert">{{ error }}</div>
+    }
+
+    <form [formGroup]="form" id="productoLoteForm" (ngSubmit)="submit()" class="row g-3">
+      <div class="col-12 col-md-6">
+        <label class="field-label" for="productoId">Producto <span class="required">*</span></label>
+        <mat-form-field appearance="outline" class="dialog-field">
+          <mat-select id="productoId" formControlName="productoId" placeholder="Seleccione un producto">
+            @for (producto of productosDisponibles; track producto.id) {
+              <mat-option [value]="producto.id">{{ producto.codigo }} - {{ producto.nombre }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.productoId.touched && form.controls.productoId.hasError('required')) {
+            <mat-error>El producto es obligatorio</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="field-label" for="loteId">Número de lote <span class="required">*</span></label>
+        <mat-form-field appearance="outline" class="dialog-field">
+          <mat-select id="loteId" formControlName="loteId" placeholder="Seleccione un lote">
+            @for (lote of lotesDisponibles; track lote.id) {
+              <mat-option [value]="lote.id">{{ lote.numeroLote }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.loteId.touched && form.controls.loteId.hasError('required')) {
+            <mat-error>El lote es obligatorio</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="col-12">
+        <label class="field-label" for="fechaIngreso">Fecha de ingreso <span class="required">*</span></label>
+        <mat-form-field appearance="outline" class="dialog-field">
+          <input matInput id="fechaIngreso" [matDatepicker]="pickerIngreso" [min]="minDate" formControlName="fechaIngreso" placeholder="dd/mm/aaaa" />
+          <mat-datepicker-toggle matIconPrefix [for]="pickerIngreso"></mat-datepicker-toggle>
+          <mat-datepicker #pickerIngreso></mat-datepicker>
+          @if (form.controls.fechaIngreso.touched && form.controls.fechaIngreso.hasError('required')) {
+            <mat-error>La fecha de ingreso es obligatoria</mat-error>
+          }
+          @if (form.controls.fechaIngreso.touched && form.controls.fechaIngreso.hasError('matDatepickerMin')) {
+            <mat-error>La fecha no puede ser anterior al día actual</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="field-label" for="precioUnitario">Precio unitario ($) <span class="required">*</span></label>
+        <mat-form-field appearance="outline" class="dialog-field">
+          <input matInput id="precioUnitario" type="number" min="0" step="0.01" formControlName="precioUnitario" placeholder="0.00" />
+          @if (form.controls.precioUnitario.touched && form.controls.precioUnitario.hasError('required')) {
+            <mat-error>El precio es obligatorio</mat-error>
+          }
+          @if (form.controls.precioUnitario.touched && form.controls.precioUnitario.hasError('min')) {
+            <mat-error>El precio no puede ser negativo</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="field-label" for="cantidad">Cantidad <span class="required">*</span></label>
+        <mat-form-field appearance="outline" class="dialog-field">
+          <input matInput id="cantidad" type="number" min="0" step="1" formControlName="cantidad" placeholder="0" />
+          @if (form.controls.cantidad.touched && form.controls.cantidad.hasError('required')) {
+            <mat-error>La cantidad es obligatoria</mat-error>
+          }
+          @if (form.controls.cantidad.touched && form.controls.cantidad.hasError('min')) {
+            <mat-error>La cantidad no puede ser negativa</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <div class="dialog-actions">
+    <button mat-stroked-button type="button" class="btn-cancel" (click)="cancel()">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" form="productoLoteForm" class="btn-save" [disabled]="saving">
+      @if (saving) {
+        <mat-spinner diameter="18"></mat-spinner>
+      } @else {
+        {{ editingId ? 'Guardar cambios' : 'Guardar ingreso' }}
+      }
+    </button>
+  </div>
+</div>
